@@ -13,8 +13,10 @@ How to Make Your Python Docker Image 80% Smaller
 
 ### Run locally
 - uvicorn src.main:app
+- [URL through Browser, no params)](http://localhost:8080/)
+- [URL through Browser, pass in params (add ?name=<aname> as parameter after /)](http://localhost:8080/?name=DarkForest)
 
-### Docker build command line
+### Docker build & Run command line
 docker build \
     --build-arg DB_HOST=mydbhost \
     --build-arg DB_USER=mydbuser \
@@ -22,4 +24,9 @@ docker build \
     --build-arg DB_NAME=mydbname \
     --no-cache \
     --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
-    -f Dockerfile.01.original . -t 01_original
+    -f Dockerfile.01.original . -t 01_original && \
+docker run -d -p 8080:8080 --name my_running_container 01_original
+
+### Test
+- docker ps (get CONTAINER ID)
+- docker exec -it  CONTAINER ID curl http://localhost:8080
