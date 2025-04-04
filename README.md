@@ -50,6 +50,28 @@ docker build \
     -f Dockerfile.03.tagged . -t 03_tagged && \
 docker run -d -p 8080:8080 --name my_running_container 03_tagged
 
+#### Limit dependencies
+docker build \
+    --build-arg DB_HOST=mydbhost \
+    --build-arg DB_USER=mydbuser \
+    --build-arg DB_PASSWORD=mydbpassword \
+    --build-arg DB_NAME=mydbname \
+    --no-cache \
+    --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
+    -f Dockerfile.04.limitdeps . -t 04_limitdeps && \
+docker run -d -p 8080:8080 --name my_running_container 03_tagged
+
+#### Clean up metadata
+docker build \
+    --build-arg DB_HOST=mydbhost \
+    --build-arg DB_USER=mydbuser \
+    --build-arg DB_PASSWORD=mydbpassword \
+    --build-arg DB_NAME=mydbname \
+    --no-cache \
+    --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
+    -f Dockerfile.05.cleandeps . -t 04_cleandeps && \
+docker run -d -p 8080:8080 --name my_running_container 04_cleandeps
+
 ### Test
 - docker ps (get CONTAINER ID)
 - docker exec -it  CONTAINER ID curl http://localhost:8080

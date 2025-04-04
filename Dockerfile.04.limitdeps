@@ -1,0 +1,43 @@
+    # change from ubuntu to smaller img
+    FROM python:3.13-slim-bookworm
+
+    # No need for python installation
+    # --no-install-recommends to avoid installing unnecessary packages
+    RUN apt-get update && apt-get install --no-install-recommends -y \
+            build-essential \
+            curl \
+            ca-certificates && \
+        apt-get clean
+
+    # Ensure `python` command is available
+    RUN ln -s /usr/bin/python3 /usr/bin/python
+
+    RUN curl -sSL https://install.python-poetry.org | python3 -
+
+    # Set up poetry environment path
+    ENV PATH="/root/.local/bin:$PATH"
+
+    # Set up environment variables
+    ENV DB_PASSWORD=${DB_PASSWORD}
+    ENV DB_USER=${DB_USER}
+    ENV DB_NAME=${DB_NAME}
+    ENV DB_HOST=${DB_HOST}
+    ENV ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+
+    WORKDIR /app
+
+    # Copy application files into container
+    COPY . .
+
+    # Install dependencies with Poetry
+    RUN poetry config virtualenvs.in-project true
+    RUN poetry install --no-interaction --no-root
+
+    # Set up virtual environment path corectly
+    ENV PATH="/app/.venv/bin:$PATH"
+
+    # Expose application port
+    EXPOSE 8080
+
+    # Start fastapi app with Uvicorn
+    CMD ["uvicorn", "src.main:app", "--log-level", "info", "--host", "0.0.0.0" , "--port", "8080"]
