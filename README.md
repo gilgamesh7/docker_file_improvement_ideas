@@ -39,6 +39,17 @@ docker build \
     -f Dockerfile.02.betterimg . -t 02_betterimg && \
 docker run -d -p 8080:8080 --name my_running_container 02_betterimg
 
+#### Tagged image
+docker build \
+    --build-arg DB_HOST=mydbhost \
+    --build-arg DB_USER=mydbuser \
+    --build-arg DB_PASSWORD=mydbpassword \
+    --build-arg DB_NAME=mydbname \
+    --no-cache \
+    --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
+    -f Dockerfile.03.tagged . -t 03_tagged && \
+docker run -d -p 8080:8080 --name my_running_container 03_tagged
+
 ### Test
 - docker ps (get CONTAINER ID)
 - docker exec -it  CONTAINER ID curl http://localhost:8080
