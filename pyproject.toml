@@ -1,17 +1,10 @@
-[tool.poetry]
-name = "docker-file-improvement-ideas"
+[project]
+name = "fastapi-example"
 version = "0.1.0"
-description = ""
-authors = ["gilgamesh7 <felidaesrule@yahoo.com>"]
+description = "A very simple FastAPI application"
 readme = "README.md"
-packages = [{include = "docker_file_improvement_ideas"}]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-fastapi = "^0.115.12"
-uvicorn = "^0.34.0"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.12",
+    "uvicorn>=0.34.0",
+]

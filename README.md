@@ -69,8 +69,19 @@ docker build \
     --build-arg DB_NAME=mydbname \
     --no-cache \
     --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
-    -f Dockerfile.05.cleandeps . -t 04_cleandeps && \
-docker run -d -p 8080:8080 --name my_running_container 04_cleandeps
+    -f Dockerfile.05.cleandeps . -t 05_cleandeps && \
+docker run -d -p 8080:8080 --name my_running_container 05_cleandeps
+
+#### use UV
+docker build \
+    --build-arg DB_HOST=mydbhost \
+    --build-arg DB_USER=mydbuser \
+    --build-arg DB_PASSWORD=mydbpassword \
+    --build-arg DB_NAME=mydbname \
+    --no-cache \
+    --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
+    -f Dockerfile.06.uv . -t 06_uv && \
+docker run -d -p 8080:8080 --name my_running_container 06_uv
 
 ### Test
 - docker ps (get CONTAINER ID)
