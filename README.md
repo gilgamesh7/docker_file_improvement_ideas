@@ -83,6 +83,17 @@ docker build \
     -f Dockerfile.06.uv . -t 06_uv && \
 docker run -d -p 8080:8080 --name my_running_container 06_uv
 
+#### Use multistage
+docker build \
+    --build-arg DB_HOST=mydbhost \
+    --build-arg DB_USER=mydbuser \
+    --build-arg DB_PASSWORD=mydbpassword \
+    --build-arg DB_NAME=mydbname \
+    --no-cache \
+    --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
+    -f Dockerfile.07.multistage . -t 07_multistage && \
+docker run -d -p 8080:8080 --name my_running_container 07_multistage
+
 ### Test
 - docker ps (get CONTAINER ID)
 - docker exec -it  CONTAINER ID curl http://localhost:8080
