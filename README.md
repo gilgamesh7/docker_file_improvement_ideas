@@ -106,6 +106,18 @@ docker build \
     -f Dockerfile.08.restrictcopy . -t 08_restrictcopy && \
 docker run -d -p 8080:8080 --name my_running_container 08_restrictcopy
 
+#### Skip mounting secrets, see repo by Aryan
+#### Create non-root user for running image
+docker build \
+    --build-arg DB_HOST=mydbhost \
+    --build-arg DB_USER=mydbuser \
+    --build-arg DB_PASSWORD=mydbpassword \
+    --build-arg DB_NAME=mydbname \
+    --no-cache \
+    --build-arg ACCESS_TOKEN_SECRET=myaccesstokensecret \
+    -f Dockerfile.10.nonrootuser . -t 10_nonrootuser && \
+docker run -d -p 8080:8080 --name my_running_container 10_nonrootuser
+
 ### Test
 - docker ps (get CONTAINER ID)
 - docker exec -it  CONTAINER ID curl http://localhost:8080
